@@ -3,7 +3,7 @@
 
 # 如何进行代码审计
   基础：php基础，常规漏洞基础，深入后的框架基础<br/>
-  以下为我自己的一些总结，不涉及具体漏洞原理。
+  以下想到什么写什么，不涉及具体漏洞原理。
 
 ## 常规流程
   1. 阅读项目的执行流程，差不多到初始化结束即可<br/>
@@ -39,6 +39,45 @@ mysql_query,mysqli_query,pdo
 
 起因：包含文件字段可控
   1. 查找include|require|include_once|require_once，查看包含文件字段是否可控
+  2. 利用方式可分为lfi和rfi，配合php的一些伪协议可达到读取文件内容，执行代码等
+
+include|require|include_once|require_once <br/>
+file:// php:// phar:// http:// zip:// <br/>
+上传个图片再包含也行<br/>
+
+#### 远程命令执行
+
+起因：调用系统命令处，未做处理<br/>
+system|passthru|pcntl_exec|shell_exec|escapeshellcmd|exec|popen<br/>
+回溯参数是否可控即可<br/>
+; && || | > ${IPS} 命令执行<br/>
+
+#### 文件上传漏洞
+起因：文件上传对文件名没有做限制，导致上传了脚本类型的文件
+
+  1. 该漏洞重点关注 move_uploaded_file 或 上传功能multipart/form-data ，观察是否没有校验文件类型就生成了文件
+  2. 过滤通常分为白名单和黑名单，关于黑名单，直接找黑名单以外的后缀名，或着根据windows的特性::$DATA绕过，或%00
+  如果是白名单，看是否重命名，利用容器解析漏洞<br/>
+
+move_uploaded_file
+#### 逻辑漏洞
+  1. 垂直越权，普通用户可执行管理员的操作，此类关注功能模块，相对应的去找代码
+  2. 水平越权，普通用户可获取其他用户的信息或修改其他用户的信息等，同样黑盒结合白盒
+  3. 逻辑错误，程序员编程不严谨导致的意料之外的漏洞。可以多关注权限验证这块，如加密算法的缺陷
+
+这块更多的关注黑盒的功能点测试，辅以白盒<br/>
+用户越权，忘记密码（通常分阶段，如果阶段间没有联系，可以任意重置），权限修改（传入可控的权限id）
+
+#### 代码执行
+起因：对eval的参数没有做处理<br/>
+重点匹配eval，对参数回溯<br/>
+也会出现在模版解析中<br/>
+很多框架会实现或调用一个模版引擎，通常会产生cache文件，如果产生cache文件前，有可控点，那么在接下来的include执行时，就会造成任意代码执行（关注assign()，display(),fetch()）<br/>
+
+#### XXE
+#### SSRF
+#### CSRF
+#### 框架挖掘
 
 
 
@@ -46,6 +85,31 @@ mysql_query,mysqli_query,pdo
 php的一些特性
 
 #### parse_str 会对传入的字串做一次urldecode
+
+
+#### 文件包含突破限制
+  %00 gpc=off,php<5.3.4 <br/>
+./././[]././ 路径长度截断 php<5.2.8<br/>
+..... 点号路径截断 php<5.2.8 windows<br/>
+
+
+
+#### empty
+  empty(0)==true
+
+#### xml+注入
+  xml 实体编码后 用 simplexml_load_string()后会转换实体<br/>
+特殊字符 特殊含义 实体编码 <br/>
+```
+> => &gt;<br/>
+< => &lt;<br/>
+" => &quot; <br/>
+' => &apos; <br/>
+& => &amp;<br/>
+```
+会再转成'"<br/>
+关注HTTP_RAW_POST_DATA
+
 
 
 
