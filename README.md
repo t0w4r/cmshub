@@ -27,7 +27,7 @@
 
 ## SQL注入漏洞
 
-起因：SQL语句拼接
+#### 起因：SQL语句拼接
   1. 查找SQL语句 或 mysql_query mysqli_query pdo (针对做预处理的情况，只查找预处理前拼接的情况)，一般项目里会有专门做数据库查询的类，可直接从这部分开始回溯
   2. 回溯可疑点拼接前是否经过安全处理，查看是否可绕过<br/>
     a. addslash 对数字型不起作用<br/>
@@ -43,7 +43,7 @@ mysql_query,mysqli_query,pdo<br/>
 
 ## 文件包含
 
-起因：包含文件字段可控
+#### 起因：包含文件字段可控
   1. 查找include|require|include_once|require_once，查看包含文件字段是否可控
   2. 利用方式可分为lfi和rfi，配合php的一些伪协议可达到读取文件内容，执行代码等
 
@@ -53,13 +53,13 @@ file:// php:// phar:// http:// zip:// <br/>
 
 ## 远程命令执行
 
-起因：调用系统命令处，未做处理<br/>
+#### 起因：调用系统命令处，未做处理
 system|passthru|pcntl_exec|shell_exec|escapeshellcmd|exec|popen<br/>
 回溯参数是否可控即可<br/>
 ; && || | > ${IPS} 命令执行<br/>
 
 ## 文件上传漏洞
-起因：文件上传对文件名没有做限制，导致上传了脚本类型的文件
+#### 起因：文件上传对文件名没有做限制，导致上传了脚本类型的文件
 
   1. 该漏洞重点关注 move_uploaded_file 或 上传功能multipart/form-data ，观察是否没有校验文件类型就生成了文件
   2. 过滤通常分为白名单和黑名单，关于黑名单，直接找黑名单以外的后缀名，或着根据windows的特性::$DATA绕过，或%00
@@ -68,7 +68,7 @@ system|passthru|pcntl_exec|shell_exec|escapeshellcmd|exec|popen<br/>
 move_uploaded_file
 
 ## 文件任意操作漏洞
-起因：未对待操作文件路径做校验<br>
+#### 起因：未对待操作文件路径做校验
 分为删除、修改、新建等操作<br>
 `unlink|copy|fwrite|file_put_contents|bzopen`<br>
 #### 案例
@@ -87,23 +87,23 @@ move_uploaded_file
 - [yxcms v1.2.1 session伪造](https://github.com/t0w4r/cmshub/blob/master/yxcms/v1.2.1.md#session-%E4%BC%AA%E9%80%A0)
 
 ## 代码执行
-起因：对eval的参数没有做处理<br/>
+#### 起因：对eval的参数没有做处理
 重点匹配eval，对参数回溯<br/>
 也会出现在模版解析中<br/>
 很多框架会实现或调用一个模版引擎，通常会产生cache文件，如果产生cache文件前，有可控点，那么在接下来的include执行时，就会造成任意代码执行（关注assign()，display(),fetch()）<br/>
 
 ## XXE
-起因：xml的外部实体<br/>
+#### 起因：xml的外部实体
 重点匹配 `new DOMDocument() loadXML() simplexml_load_string`<br/>
 观察是否xml可控
 
 ## SSRF
-起因：对提供的url未做限制<br/>
+#### 起因：对提供的url未做限制
 重点匹配 `curl_setopt file_get_contents fsockopen`<br/>
 观察url是否可控，协议头是否可控，通过功能定位代码
 
 ## CSRF
-起因：未对提交的表单做tokens等处理<br/>
+#### 起因：未对提交的表单做tokens等处理
 无敏感函数，黑盒关注敏感表单是否提交token等操作
 
 ## 反序列化
