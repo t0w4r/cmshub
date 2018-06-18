@@ -39,7 +39,7 @@ mysql_query,mysqli_query,pdo<br/>
 - [yxcms v1.2.1 cookie注入](!https://github.com/t0w4r/cmshub/blob/master/yxcms/v1.2.1.md#cookie-%E6%B3%A8%E5%85%A5)
 - [yxcms v1.2.1 前台注入](!https://github.com/t0w4r/cmshub/blob/master/yxcms/v1.2.1.md#%E5%89%8D%E5%8F%B0sql%E6%B3%A8%E5%85%A5)
 - [zzcms v8.2 SQL注入](!https://github.com/t0w4r/cmshub/blob/master/zzcms/v8.2.md#sql%E6%B3%A8%E5%85%A5)
-- [zzcms v8.2 登陆处盲注](!https://github.com/t0w4r/cmshub/blob/master/zzcms/v8.2.md#%E7%99%BB%E9%99%86%E5%A4%84%E7%9B%B2%E6%B3%A8%E5%A4%8D%E7%8E%B0%E6%97%B6%E5%8F%91%E7%8E%B0%E7%9A%84%E5%8F%A6%E4%B8%80%E4%B8%AA%E6%BC%8F%E6%B4%9E%E5%90%8E%E6%9D%A5%E5%8F%91%E7%8E%B0%E5%B7%B2%E7%BB%8F%E6%9C%89%E5%89%8D%E8%BE%88%E5%8F%91%E7%8E%B0%E4%BA%86)
+- [zzcms v8.2 登陆处盲注](https://github.com/t0w4r/cmshub/blob/master/zzcms/v8.2.md#%E7%99%BB%E9%99%86%E5%A4%84%E7%9B%B2%E6%B3%A8%E5%A4%8D%E7%8E%B0%E6%97%B6%E5%8F%91%E7%8E%B0%E7%9A%84%E5%8F%A6%E4%B8%80%E4%B8%AA%E6%BC%8F%E6%B4%9E%E5%90%8E%E6%9D%A5%E5%8F%91%E7%8E%B0%E5%B7%B2%E7%BB%8F%E6%9C%89%E5%89%8D%E8%BE%88%E5%8F%91%E7%8E%B0%E4%BA%86)
 
 ## 文件包含
 
