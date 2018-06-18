@@ -36,9 +36,9 @@
 关注SQL语句，看看是否是拼接(这边回溯可能要很多，但是有可能回溯到的位置会很有意思，比如解析xml出来的注入)
 mysql_query,mysqli_query,pdo<br/>
 案例<br/>
-- [yxcms v1.2.1 cookie注入](!https://github.com/t0w4r/cmshub/blob/master/yxcms/v1.2.1.md#cookie-%E6%B3%A8%E5%85%A5)
-- [yxcms v1.2.1 前台注入](!https://github.com/t0w4r/cmshub/blob/master/yxcms/v1.2.1.md#%E5%89%8D%E5%8F%B0sql%E6%B3%A8%E5%85%A5)
-- [zzcms v8.2 SQL注入](!https://github.com/t0w4r/cmshub/blob/master/zzcms/v8.2.md#sql%E6%B3%A8%E5%85%A5)
+- [yxcms v1.2.1 cookie注入](https://github.com/t0w4r/cmshub/blob/master/yxcms/v1.2.1.md#cookie-%E6%B3%A8%E5%85%A5)
+- [yxcms v1.2.1 前台注入](https://github.com/t0w4r/cmshub/blob/master/yxcms/v1.2.1.md#%E5%89%8D%E5%8F%B0sql%E6%B3%A8%E5%85%A5)
+- [zzcms v8.2 SQL注入](https://github.com/t0w4r/cmshub/blob/master/zzcms/v8.2.md#sql%E6%B3%A8%E5%85%A5)
 - [zzcms v8.2 登陆处盲注](https://github.com/t0w4r/cmshub/blob/master/zzcms/v8.2.md#%E7%99%BB%E9%99%86%E5%A4%84%E7%9B%B2%E6%B3%A8%E5%A4%8D%E7%8E%B0%E6%97%B6%E5%8F%91%E7%8E%B0%E7%9A%84%E5%8F%A6%E4%B8%80%E4%B8%AA%E6%BC%8F%E6%B4%9E%E5%90%8E%E6%9D%A5%E5%8F%91%E7%8E%B0%E5%B7%B2%E7%BB%8F%E6%9C%89%E5%89%8D%E8%BE%88%E5%8F%91%E7%8E%B0%E4%BA%86)
 
 ## 文件包含
@@ -72,9 +72,9 @@ move_uploaded_file
 分为删除、修改、新建等操作<br>
 `unlink|copy|fwrite|file_put_contents|bzopen`<br>
 案例<br>
-- [yxcms v1.2.1 后台任意文件删除](!https://github.com/t0w4r/cmshub/blob/master/yxcms/v1.2.1.md#%E5%90%8E%E5%8F%B0%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4)
-- [zzcms v8.2 install配置文件任意内容写入](!https://github.com/t0w4r/cmshub/blob/master/zzcms/v8.2.md#install-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BB%BB%E6%84%8F%E5%86%85%E5%AE%B9%E5%86%99%E5%85%A5)
-- [zzcms v8.2 任意文件删除](!https://github.com/t0w4r/cmshub/blob/master/zzcms/v8.2.md#%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4)
+- [yxcms v1.2.1 后台任意文件删除](https://github.com/t0w4r/cmshub/blob/master/yxcms/v1.2.1.md#%E5%90%8E%E5%8F%B0%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4)
+- [zzcms v8.2 install配置文件任意内容写入](https://github.com/t0w4r/cmshub/blob/master/zzcms/v8.2.md#install-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BB%BB%E6%84%8F%E5%86%85%E5%AE%B9%E5%86%99%E5%85%A5)
+- [zzcms v8.2 任意文件删除](https://github.com/t0w4r/cmshub/blob/master/zzcms/v8.2.md#%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4)
 
 ## 逻辑漏洞
   1. 垂直越权，普通用户可执行管理员的操作，此类关注功能模块，相对应的去找代码
@@ -84,7 +84,7 @@ move_uploaded_file
 这块更多的关注黑盒的功能点测试，辅以白盒<br/>
 用户越权，忘记密码（通常分阶段，如果阶段间没有联系，可以任意重置），权限修改（传入可控的权限id）<br/>
 案例<br>
-- [yxcms v1.2.1 session伪造](!https://github.com/t0w4r/cmshub/blob/master/yxcms/v1.2.1.md#session-%E4%BC%AA%E9%80%A0)
+- [yxcms v1.2.1 session伪造](https://github.com/t0w4r/cmshub/blob/master/yxcms/v1.2.1.md#session-%E4%BC%AA%E9%80%A0)
 
 ## 代码执行
 起因：对eval的参数没有做处理<br/>
