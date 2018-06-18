@@ -34,7 +34,12 @@
     b. 转义单引号 看编码 宽字节注入<br/>
     c. 看处理逻辑是否可绕过，如果是软waf类似360wenscan，这种先找找网上绕过的方法。如果是自己写的处理，那就好好看代码吧<br/>
 关注SQL语句，看看是否是拼接(这边回溯可能要很多，但是有可能回溯到的位置会很有意思，比如解析xml出来的注入)
-mysql_query,mysqli_query,pdo
+mysql_query,mysqli_query,pdo<br/>
+案例<br/>
+- [yxcms v1.2.1 cookie注入](!https://github.com/t0w4r/cmshub/blob/master/yxcms/v1.2.1.md#cookie-%E6%B3%A8%E5%85%A5)
+- [yxcms v1.2.1 前台注入](!https://github.com/t0w4r/cmshub/blob/master/yxcms/v1.2.1.md#%E5%89%8D%E5%8F%B0sql%E6%B3%A8%E5%85%A5)
+- [zzcms v8.2 SQL注入](!https://github.com/t0w4r/cmshub/blob/master/zzcms/v8.2.md#sql%E6%B3%A8%E5%85%A5)
+- [zzcms v8.2 登陆处盲注](!https://github.com/t0w4r/cmshub/blob/master/zzcms/v8.2.md#%E7%99%BB%E9%99%86%E5%A4%84%E7%9B%B2%E6%B3%A8%E5%A4%8D%E7%8E%B0%E6%97%B6%E5%8F%91%E7%8E%B0%E7%9A%84%E5%8F%A6%E4%B8%80%E4%B8%AA%E6%BC%8F%E6%B4%9E%E5%90%8E%E6%9D%A5%E5%8F%91%E7%8E%B0%E5%B7%B2%E7%BB%8F%E6%9C%89%E5%89%8D%E8%BE%88%E5%8F%91%E7%8E%B0%E4%BA%86)
 
 ## 文件包含
 
@@ -61,13 +66,25 @@ system|passthru|pcntl_exec|shell_exec|escapeshellcmd|exec|popen<br/>
   如果是白名单，看是否重命名，利用容器解析漏洞<br/>
 
 move_uploaded_file
+
+## 文件任意操作漏洞
+起因：未对待操作文件路径做校验<br>
+分为删除、修改、新建等操作<br>
+`unlink|copy|fwrite|file_put_contents|bzopen`<br>
+案例<br>
+- [yxcms v1.2.1 后台任意文件删除](!https://github.com/t0w4r/cmshub/blob/master/yxcms/v1.2.1.md#%E5%90%8E%E5%8F%B0%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4)
+- [zzcms v8.2 install配置文件任意内容写入](!https://github.com/t0w4r/cmshub/blob/master/zzcms/v8.2.md#install-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BB%BB%E6%84%8F%E5%86%85%E5%AE%B9%E5%86%99%E5%85%A5)
+- [zzcms v8.2 任意文件删除](!https://github.com/t0w4r/cmshub/blob/master/zzcms/v8.2.md#%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%88%A0%E9%99%A4)
+
 ## 逻辑漏洞
   1. 垂直越权，普通用户可执行管理员的操作，此类关注功能模块，相对应的去找代码
   2. 水平越权，普通用户可获取其他用户的信息或修改其他用户的信息等，同样黑盒结合白盒
   3. 逻辑错误，程序员编程不严谨导致的意料之外的漏洞。可以多关注权限验证这块，如加密算法的缺陷
 
 这块更多的关注黑盒的功能点测试，辅以白盒<br/>
-用户越权，忘记密码（通常分阶段，如果阶段间没有联系，可以任意重置），权限修改（传入可控的权限id）
+用户越权，忘记密码（通常分阶段，如果阶段间没有联系，可以任意重置），权限修改（传入可控的权限id）<br/>
+案例<br>
+- [yxcms v1.2.1 session伪造](!https://github.com/t0w4r/cmshub/blob/master/yxcms/v1.2.1.md#session-%E4%BC%AA%E9%80%A0)
 
 ## 代码执行
 起因：对eval的参数没有做处理<br/>
@@ -76,17 +93,17 @@ move_uploaded_file
 很多框架会实现或调用一个模版引擎，通常会产生cache文件，如果产生cache文件前，有可控点，那么在接下来的include执行时，就会造成任意代码执行（关注assign()，display(),fetch()）<br/>
 
 ## XXE
-起因：xml的外部实体
-重点匹配 new DOMDocument() loadXML() simplexml_load_string
+起因：xml的外部实体<br/>
+重点匹配 `new DOMDocument() loadXML() simplexml_load_string`<br/>
 观察是否xml可控
 
 ## SSRF
-起因：对提供的url未做限制
-重点匹配 curl_setopt file_get_contents fsockopen
+起因：对提供的url未做限制<br/>
+重点匹配 `curl_setopt file_get_contents fsockopen`<br/>
 观察url是否可控，协议头是否可控，通过功能定位代码
 
 ## CSRF
-起因：未对提交的表单做tokens等处理
+起因：未对提交的表单做tokens等处理<br/>
 无敏感函数，黑盒关注敏感表单是否提交token等操作
 
 ## 反序列化
